@@ -30,7 +30,7 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'contact'], 'required'],
+            [['name', 'email', 'contact'], 'required', 'on'=>'create'],
             [['contact'], 'integer'],
             [['name', 'email'], 'string', 'max' => 255],
         ];
@@ -52,7 +52,7 @@ class Employee extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenario=parent::scenarios();
-        $scenarios['create']=['name','email'];
+        $scenarios["create"]=['name','email','contact'];
         return $scenario;
     }
 }

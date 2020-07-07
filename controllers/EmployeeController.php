@@ -7,52 +7,51 @@ use app\models\Employee;
 class EmployeeController extends \yii\web\Controller
 {
 
-    public $enableCrscValidation=false;     
+    public $enableCsrfValidation = false;
+
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    public function actionCreateEmployee(){
+    public function actionCreateEmployee()
+    {
 
-        \Yii::$app->response->format=\Yii\web\Response::FORMAT_JSON;  //returns in json
+        // print_r("employee should be created");exit;
 
-        $employee=new  Employee();
-        $employee->scenario=Employee::SCENERIO_CREATE;
-        $employee->attributes=\Yii::$app->request->post();
+        \Yii::$app->response->format = \Yii\web\Response::FORMAT_JSON;  //returns in json
+
+        $employee = new  Employee();
+        $employee->scenario = Employee::SCENERIO_CREATE;
+        $employee->attributes = \Yii::$app->request->post();
 
 
-        if($employee->validate()){
+        if ($employee->validate()) {
 
-        $employee->save();  
+            $employee->save();
 
-        return array('status'=>true,'data'=>'employ created successfully');
-        }else{
-        return array('status'=>false,'data'=>$employee->getErrors());
-
+            return array('status' => true, 'data' => 'employee created successfully');
+        } else {
+            return array('status' => false, 'data' => $employee->getErrors());
         }
         // print_r('employee created!');exit;
 
 
     }
 
-    public function actionListEmployee(){
+    public function actionListEmployee()
+    {
 
-        \Yii::$app->response->format=\Yii\web\Response::FORMAT_JSON;
+        \Yii::$app->response->format = \Yii\web\Response::FORMAT_JSON;
 
 
-        $employee=Employee::find()->all();
+        $employee = Employee::find()->all();
 
-        if(count($employee)>0){
+        if (count($employee) > 0) {
 
-            return array('status'=>true,'data'=>$employee);
-
-        }else{
-            return array('status'=>false,'data'=>"Sorry!!!No employees found");
-
+            return array('status' => true, 'data' => $employee);
+        } else {
+            return array('status' => false, 'data' => "Sorry!!!No employees found");
         }
-
     }
-
-
 }
